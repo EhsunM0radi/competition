@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Test;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +16,15 @@ class TestFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = Test::class;
+
+
     public function definition(): array
     {
         return [
-            //
+            'content' => $this->faker->paragraph,
+            'user_id' => User::factory()->contender(),
         ];
     }
 }

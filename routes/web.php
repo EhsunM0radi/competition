@@ -1,0 +1,21 @@
+<?php
+
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/tests-to-assess',[DashboardController::class,'testsToAssess'])->name('testsToAssess');
+    Route::get('/test/{id}',[DashboardController::class,'test'])->name('test');
+    Route::get('/assessment/{id}',[DashboardController::class,'assessment'])->name('assessment');
+});

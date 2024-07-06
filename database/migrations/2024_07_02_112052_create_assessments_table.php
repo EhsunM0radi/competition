@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('judge_id');
@@ -19,11 +19,10 @@ return new class extends Migration
             $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
             $table->unsignedBigInteger('score');
-            $table->enum('type',['group','individual']);
+            $table->enum('type', ['group', 'individual']);
             $table->timestamps();
             $table->softDeletes();
         });
-        
     }
 
     /**

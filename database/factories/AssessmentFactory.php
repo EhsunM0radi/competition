@@ -27,7 +27,6 @@ class AssessmentFactory extends Factory
             'judge_id' => User::factory()->judge(),
             'test_id' => Test::factory(),
             'score' => $this->faker->numberBetween(1, 100),
-            'type' => $this->faker->randomElement(['group', 'individual']),
         ];
     }
 }

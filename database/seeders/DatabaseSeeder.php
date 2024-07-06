@@ -15,8 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         // Create judges
         $judges = User::factory()->count(5)->judge()->create();
 
@@ -28,13 +26,23 @@ class DatabaseSeeder extends Seeder
 
             foreach ($tests as $test) {
                 // Assign random judges to the test
-                $test->judges()->attach(
-                    $judges->random(rand(1, 3))->pluck('id')->toArray()
-                );
+                $assignedJudges = $judges->random(rand(1, 3))->pluck('id')->toArray();
+                $test->judges()->attach($assignedJudges);
 
-                // Create assessments for the test by judges
+                // Randomly create assessments for some of the assigned judges
                 foreach ($test->judges as $judge) {
-                    Assessment::factory()->for($test)->for($judge, 'judge')->create();
+                    if (rand(0, 1)) { // Randomly decide to create or not create an assessment
+                        $assessment = Assessment::factory()->for($test)->for($judge, 'judge')->create();
+
+                        // Determine the type of assessment
+                        if (count($assignedJudges) > 1) {
+                            $assessment->type = 'group';
+                        } else {
+                            $assessment->type = 'individual';
+                        }
+
+                        $assessment->save();
+                    }
                 }
             }
         }

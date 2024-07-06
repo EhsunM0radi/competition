@@ -13,14 +13,20 @@ class Assessment extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function test():BelongsTo
+    protected $fillable = [
+        'score',
+        'test_id',
+        'judge_id',
+        'type'
+    ];
+
+    public function test(): BelongsTo
     {
         return $this->belongsTo(Test::class);
     }
 
-    public function judge():BelongsTo
+    public function judge(): BelongsTo
     {
-        return $this->belongsTo(User::class)->where('role','judge');
+        return $this->belongsTo(User::class,'judge_id')->where('role', 'judge');
     }
-    
 }

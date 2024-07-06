@@ -15,19 +15,24 @@ class Test extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'content',
+        'user_id',
+    ];
+
     protected $table = 'tests';
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class)->where('role','contender');
+        return $this->belongsTo(User::class)->where('role', 'contender');
     }
 
-    public function judges():BelongsToMany
+    public function judges(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->where('role','judge');
+        return $this->belongsToMany(User::class)->where('role', 'judge');
     }
 
-    public function assessment():HasMany
+    public function assessments(): HasMany
     {
         return $this->hasMany(Assessment::class);
     }

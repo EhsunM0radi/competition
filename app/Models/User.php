@@ -31,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -67,19 +68,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function testsToAssess():BelongsToMany
+    public function testsToAssess(): BelongsToMany
     {
-        return $this->belongsToMany(Test::class);
+        return $this->belongsToMany(Test::class, 'test_judge', 'judge_id', 'test_id');
     }
 
-    public function testsForCompetition():HasMany
+    public function tests(): HasMany
     {
         return $this->hasMany(Test::class);
     }
-    
-    public function assessments():HasMany
-    {
-        return $this->hasMany(Assessment::class);
-    }
 
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class, 'judge_id');
+    }
 }

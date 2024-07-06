@@ -29,7 +29,7 @@ class Test extends Model
 
     public function judges(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->where('role', 'judge');
+        return $this->belongsToMany(User::class,'test_judge','test_id','judge_id')->where('role','judge');
     }
 
     public function assessments(): HasMany

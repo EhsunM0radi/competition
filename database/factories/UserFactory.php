@@ -18,6 +18,7 @@ class UserFactory extends Factory
      * The current password being used by the factory.
      */
     protected static ?string $password;
+    protected $model = User::class;
 
     /**
      * Define the model's default state.
@@ -36,6 +37,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'role' => $this->faker->randomElement(['judge', 'contender'])
         ];
     }
 
@@ -68,5 +70,23 @@ class UserFactory extends Factory
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
+    }
+
+    public function judge()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'judge',
+            ];
+        });
+    }
+
+    public function contender()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'contender',
+            ];
+        });
     }
 }

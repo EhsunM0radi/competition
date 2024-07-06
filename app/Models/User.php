@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function testsToAssess(): BelongsToMany
     {
-        return $this->belongsToMany(Test::class, 'test_judge', 'judge_id', 'test_id');
+        return $this->belongsToMany(Test::class,'test_judge','judge_id','test_id');
     }
 
     public function tests(): HasMany
